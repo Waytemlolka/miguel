@@ -1,0 +1,14 @@
+<Window x:Class="LobbyLens.App.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LobbyLens overlay"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Topmost="True" ShowInTaskbar="False" ShowActivated="False" Focusable="False"
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+    <Border Background="#CC101418" CornerRadius="6" Padding="12,6" BorderThickness="1" x:Name="Frame" BorderBrush="#555">
+        <StackPanel>
+            <TextBlock x:Name="Line1" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Text="LobbyLens"/>
+            <TextBlock x:Name="Line2" Foreground="#DDD" FontSize="14" HorizontalAlignment="Center" Text=""/>
+        </StackPanel>
+    </Border>
+</Window>

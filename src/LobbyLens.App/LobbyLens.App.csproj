@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AssemblyName>LobbyLens</AssemblyName>
+    <RootNamespace>LobbyLens.App</RootNamespace>
+    <Version>0.1.0</Version>
+    <Product>LobbyLens</Product>
+    <Description>Shows the Dota 2 lobby ID before you accept and compares it inside a group.</Description>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MQTTnet" Version="4.3.7.1207" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LobbyLens.Core\LobbyLens.Core.csproj" />
+  </ItemGroup>
+
+</Project>

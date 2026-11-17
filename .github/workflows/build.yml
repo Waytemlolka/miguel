@@ -1,0 +1,47 @@
+name: build
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Tests
+        run: dotnet test tests/LobbyLens.Tests -c Release
+
+      - name: Publish single-file exe
+        run: >
+          dotnet publish src/LobbyLens.App -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true -p:DebugType=none
+          -p:Version=0.1.${{ github.run_number }} -o out
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LobbyLens-exe
+          path: out/LobbyLens.exe
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.${{ github.run_number }}
+          name: LobbyLens 0.1.${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          files: out/LobbyLens.exe
+          body: |
+            Скачай **LobbyLens.exe** и запусти — установка и .NET не нужны.
+            Перед первым запуском Dota добавь в параметры запуска: `-console -condebug`.
+            Подробности — в README.

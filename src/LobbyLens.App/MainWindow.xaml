@@ -1,0 +1,75 @@
+<Window x:Class="LobbyLens.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LobbyLens — общий матч в Dota 2" Width="760" Height="820" MinWidth="600" MinHeight="600"
+        FontSize="13">
+    <DockPanel Margin="10">
+
+        <!-- Dota log -->
+        <GroupBox DockPanel.Dock="Top" Header="Dota 2 — console.log" Padding="6">
+            <StackPanel>
+                <DockPanel>
+                    <Button DockPanel.Dock="Right" Content="Авто" Width="60" Margin="4,0,0,0" Click="OnAutoPath"/>
+                    <Button DockPanel.Dock="Right" Content="Выбрать…" Width="80" Margin="4,0,0,0" Click="OnBrowsePath"/>
+                    <TextBox x:Name="LogPathBox" IsReadOnly="True"/>
+                </DockPanel>
+                <TextBlock x:Name="LogStatus" TextWrapping="Wrap" Margin="0,4,0,0" Foreground="DarkOrange"/>
+                <TextBlock TextWrapping="Wrap" Margin="0,4,0,0" Foreground="Gray">
+                    Нужно один раз: Steam → Dota 2 → Свойства → Параметры запуска → <Run FontWeight="Bold" Text="-console -condebug"/>, затем перезапустить Dota.
+                    Для виджета поверх игры поставь в Dota режим «Окно без рамки».
+                </TextBlock>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Current lobby -->
+        <GroupBox DockPanel.Dock="Top" Header="Текущее лобби" Padding="6" Margin="0,8,0,0">
+            <StackPanel>
+                <TextBlock x:Name="PhaseLabel" FontSize="18" FontWeight="Bold" Text="Ожидание…"/>
+                <DockPanel Margin="0,6,0,0">
+                    <Button DockPanel.Dock="Right" Content="Копировать" Width="100" Margin="6,0,0,0" Click="OnCopyLobby"/>
+                    <TextBlock DockPanel.Dock="Left" Text="ID лобби: " VerticalAlignment="Center" FontSize="16"/>
+                    <TextBox x:Name="LobbyIdBox" IsReadOnly="True" FontSize="22" FontFamily="Consolas" BorderThickness="0" Background="Transparent" Text="—"/>
+                </DockPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                    <TextBlock Text="Код для голоса (последние 6 цифр): " FontSize="16" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="ShortCode" FontSize="30" FontWeight="Bold" FontFamily="Consolas" Text="—"/>
+                </StackPanel>
+                <TextBlock x:Name="DetailsText" Foreground="DimGray" TextWrapping="Wrap" Margin="0,4,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Group -->
+        <GroupBox DockPanel.Dock="Top" Header="Группа (необязательно — можно сверять код голосом)" Padding="6" Margin="0,8,0,0">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Ник:" VerticalAlignment="Center" Width="40"/>
+                    <TextBox x:Name="NameBox" Width="180" LostFocus="OnNameChanged"/>
+                    <TextBlock Text="Код группы:" VerticalAlignment="Center" Margin="16,0,6,0"/>
+                    <TextBox x:Name="GroupCodeBox" Width="130" FontFamily="Consolas" FontSize="15" CharacterCasing="Upper"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                    <Button Content="Создать группу" Width="130" Click="OnCreateGroup"/>
+                    <Button Content="Войти по коду" Width="130" Margin="6,0,0,0" Click="OnJoinGroup"/>
+                    <Button Content="Выйти" Width="80" Margin="6,0,0,0" Click="OnLeaveGroup"/>
+                    <Button Content="Копировать код" Width="120" Margin="6,0,0,0" Click="OnCopyCode"/>
+                </StackPanel>
+                <TextBlock x:Name="GroupStatus" Margin="0,6,0,0" Foreground="Gray" Text="Не в группе"/>
+                <TextBlock x:Name="MatchHeadline" Margin="0,4,0,0" FontSize="16" FontWeight="Bold"/>
+                <ListBox x:Name="MembersList" Height="110" Margin="0,4,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Tools -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,8,0,0">
+            <CheckBox x:Name="OverlayAlways" Content="Виджет поверх игры всегда (иначе — когда окно свёрнуто)" VerticalAlignment="Center" Click="OnOverlayToggle"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,6,0,0">
+            <Button Content="Проверить файл лога…" Width="170" Click="OnAnalyzeFile"/>
+            <Button Content="Проверить текущий console.log" Width="210" Margin="6,0,0,0" Click="OnAnalyzeCurrent"/>
+            <Button Content="Папка с записями" Width="130" Margin="6,0,0,0" Click="OnOpenSessions"/>
+        </StackPanel>
+
+        <TextBlock DockPanel.Dock="Top" Text="События из лога:" Margin="0,8,0,2" Foreground="Gray"/>
+        <ListBox x:Name="EventsList" FontFamily="Consolas" FontSize="12"/>
+    </DockPanel>
+</Window>
